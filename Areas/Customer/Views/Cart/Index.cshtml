@@ -1,0 +1,95 @@
+﻿@model HamBurger.Models.ShoppingCartVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    @if (Model.ListCart.Count() >= 0)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <br />
+                    <table class="table table-striped table-bordered" id="myTableCategory">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Resim
+                                </th>
+                                <th>
+                                    Ürün Adı
+                                </th>
+                                <th>
+                                    Adet
+                                </th>
+                                <th>
+                                    Fiyat
+                                </th>
+                                <th>
+                                    Toplam Tutar
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ListCart)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="~/images/products/@item.Product.Image" width="120" height="100">
+                                    </td>
+                                    <td>
+                                        @item.Product.Name
+                                    </td>
+                                    <td>
+                                        @*Sipariş sayısını arttırma, azaltma ve silme işlevleri olsun diye bootstraptan button aldık*@
+                                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                <button asp-action="Decrease" asp-route-cartId="@item.Id" class="btn btn-outline-danger"><i class="bi bi-dash"></i></button> @*Eksilt*@
+                                                <input type="text" style="max-width:45px" class="form-control" value="@item.Count">
+                                                <button asp-action="Add" asp-route-cartId="@item.Id" class="btn btn-outline-success"><i class="bi bi-plus"></i></button>@*Arttır*@
+                                                <button asp-action="Remove" asp-route-cartId="@item.Id"><i class="bi bi-trash"></i></button> @*Sil*@
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @item.Product.Price.ToString("0.00")-TL
+                                    </td>
+                                    <td>
+                                        @((item.Count * item.Product.Price).ToString("0.00"))-TL
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="4" style="text-align:right">
+                                    @* 4 colonu tek kolon yaptık*@
+                                    <strong>TOPLAM TUTAR</strong>
+                                </td>
+                                <td style="background-color: orangered">
+                                    <span style="font-size: large; color: white">@Model.OrderHeader.OrderTotal.ToString("0.00")-TL</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn-outline-primary form-control" style="text-align:center"> Siparişe Devam Et</a>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4">
+                            <a asp-area="Customer" asp-controller="Cart" asp-action="Summary" class="btn-outline-success form-control" style="text-align:center"> Siparişi Tamamla</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+      <div>
+          Sepetiniz Boş
+      </div>
+    }
+</form>
+

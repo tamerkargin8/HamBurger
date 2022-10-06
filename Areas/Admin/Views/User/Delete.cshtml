@@ -1,0 +1,46 @@
+﻿
+@model HamBurger.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-8">
+            <h3>Kayıt Silinecektir, Emin Misiniz ?</h3>
+            <div>
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Email
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Adı
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Soyadı
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Surname)
+                    </dd>
+                </dl>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Sil" class="btn btn-outline-danger" />
+                    <a asp-action="Index" class="btn btn-outline-primary">Geri Dön</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

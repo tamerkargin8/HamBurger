@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HamBurger.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <table class="table table-striped table-bordered" id="myTableCategory">
+        <thead>
+            <tr>
+                <th>
+                    Kategori
+                </th>
+                <th>
+                    Detay
+                </th>
+                <th>
+                    Kategori Görsel
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <img src="~/images/category/@item.Image" style="width:100px; height:80px" />
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Düzenle</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detay</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary form-control">Kategori Ekle</a>
+</p>
+@section Scripts
+{
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTableCategory').DataTable();
+        });
+</script>
+}

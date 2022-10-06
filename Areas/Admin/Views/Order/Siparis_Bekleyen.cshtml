@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HamBurger.Models.OrderHeader>
+@{
+    ViewData["Title"] = "Siparis_Bekleyen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end" role="group" aria-label="Basic example">
+    <a asp-action="Siparis_Bekleyen" asp-area="Admin" asp-controller="Order" type="button" class="btn btn-outline-primary active">Bekleyen Siparişler</a>
+    <a asp-action="Siparis_Onaylandi" asp-area="Admin" asp-controller="Order" type="button" class="btn btn-outline-primary ">Onaylanan Siparişler</a>
+    <a asp-action="Siparis_Yolda" asp-area="Admin" asp-controller="Order" type="button" class="btn btn-outline-primary">Siparis_Yolda</a>
+    <a asp-action="Index" asp-area="Admin" asp-controller="Order" type="button" class="btn btn-outline-primary">Tüm Siparişler</a>
+</div>
+<br />
+<div class="container">
+    <table class="table table-striped table-bordered" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    Adı
+                </th>
+                <th>
+                    Soyadı
+                </th>
+                <th>
+                    Telefon
+                </th>
+                <th>
+                    Sipariş Durumu
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Surname
+                    </td>
+                    <td>
+                        @item.PhoneNumber
+                    </td>
+                    <td>
+                        @item.OrderStatus
+                    </td>
+                    <td>
+                        @if (User.IsInRole(Other.Role_Admin))
+                        {
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Düzenle</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detay</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+

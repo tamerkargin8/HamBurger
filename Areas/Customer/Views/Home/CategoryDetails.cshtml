@@ -1,0 +1,56 @@
+﻿@model IEnumerable<HamBurger.Models.Product>
+@{
+    ViewData["Title"] = "CategoryDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <iframe width="1100" height="400" style="margin-bottom:20px" src="https://www.youtube.com/embed/V5w1OGknhlc" title="The Heavy Hitting Burger - Promo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="container">
+        <div class="row">
+            @await Component.InvokeAsync("CategoryList")
+            @if (Model.Count()>0)
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                @item.Name
+                            </div>
+                            <img src="~/images/products/@item.Image" class="card-img-top" alt="..." style="height: auto; width:auto; box-sizing:content-box">
+                            <div class="card-body">
+                                <p class="card-text">@item.Description</p>
+                            </div>
+                            <form method="post">
+                                <div class="card-footer">
+                                    <label style="font-size:20px; color:crimson"><b>@item.Price.ToString("0.00")-TL</b></label>
+                                    <a asp-area="Customer" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id" class="card-link, btn btn-outline-success" style="float:right">Detay</a>
+                                    <div>
+                                        @if (item.Stock != 0)
+                                        {
+                                            <a asp-area="Customer" asp-action="Details" asp-controller="Home" asp-route-id="@item.Id" button type="submit" class="card-link, btn btn-outline-danger" style="align-content:center"><i class="bi bi-cart4"> Sepete Ekle</i></a>
+                                        }
+                                        else
+                                        {
+                                            <label class="btn btn-danger">Ürün Stokta Yok</label>
+                                        }
+                                        <br />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning text-center">
+                    Kategoriye Ait Ürün Bulunmamaktadır.
+                    </div>
+            }
+
+        </div>
+    </div>
+</div>
+

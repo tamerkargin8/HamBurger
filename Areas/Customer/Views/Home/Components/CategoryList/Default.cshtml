@@ -1,0 +1,14 @@
+﻿@model IEnumerable<HamBurger.Models.Category>
+<div class="col-md-3">
+    <div class="card">
+        <div class="list-group">
+            <a asp-action="Index" asp-controller="Home" class="list-group-item list-group-item-action @(ViewBag.CategoryListId == null?"active":"")" aria-current="true">
+                Tüm Ürünler
+            </a>
+            @foreach (var item in Model)
+            {
+                                <a asp-action="CategoryDetails" asp-controller="Home" class="list-group-item list-group-item-action @(ViewBag.CategoryListId?.ToString()==item.Id.ToString()?"active":"")" asp-route-id="@item.Id" > @item.Name</a>
+            }
+        </div>
+    </div>
+</div>
